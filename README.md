@@ -1,4 +1,4 @@
-generate_modern_soap_pdf# MedFlow AI – Intelligent SOAP Note Generation & Clinical Documentation
+# MedFlow AI – Intelligent SOAP Note Generation & Clinical Documentation
 
 ## Problem Statement
 Clinical documentation is one of the biggest sources of burnout for healthcare professionals. Doctors spend a significant portion of their time manually writing SOAP notes, which reduces patient interaction, increases fatigue, and introduces inconsistencies in medical records.
