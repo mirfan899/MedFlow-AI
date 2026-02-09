@@ -4,3 +4,6 @@ pillow
 reportlab
 huggingface_hub
 accelerate
+langgraph
+langchain
+jupyter
