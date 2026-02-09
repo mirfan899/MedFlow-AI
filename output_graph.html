@@ -1,0 +1,73 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MedFlow AI - JSON Visualization</title>
+        <style>
+            body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: sans-serif; }
+            iframe { width: 100%; height: 100%; border: none; }
+            #controls {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: white;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                z-index: 100;
+            }
+            button {
+                padding: 8px 16px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            button:hover { background-color: #0056b3; }
+        </style>
+    </head>
+    <body>
+        <div id="controls">
+            <button onclick="sendData()">Reload Graph Data</button>
+        </div>
+        <iframe id="jsoncrackEmbed" src="https://jsoncrack.com/widget"></iframe>
+        <script>
+            const jsonData = {"soap_note": {"subjective": {"chief_complaint": "Chest discomfort, shortness of breath during exertion, and fatigue.", "history_of_present_illness": "Patient reports experiencing chest discomfort, shortness of breath during exertion, and fatigue for the past 2 weeks. The symptoms are described as moderate in severity.", "past_medical_history": "Patient has a history of hypertension.", "medications": [], "allergies": [], "social_history": "Missing", "family_history": "Missing", "review_of_systems": "Missing", "missing_information": ["Social history", "Family history", "Review of systems", "Detailed description of chest discomfort (location, character, radiation)", "Details about shortness of breath (onset, triggers, relieving factors)"]}, "objective": {"vital_signs": {"blood_pressure": "145/90 mmHg", "heart_rate": "92 bpm", "respiratory_rate": "Missing", "temperature": "Missing", "oxygen_saturation": "Missing"}, "physical_exam": "Missing", "imaging": {"chest_xray": "Attached image of chest X-ray.  Analysis pending.  Note:  The image is a chest X-ray.  The image is not a report.  The image is not a diagnosis.", "other_imaging": "Missing"}, "laboratory_results": "Missing", "missing_information": ["Respiratory rate", "Temperature", "Oxygen saturation", "Physical exam findings", "Details of chest X-ray findings (e.g., cardiomegaly, pulmonary edema, infiltrates)"]}, "assessment": "Patient presents with symptoms suggestive of possible cardiac or pulmonary etiology.  Further evaluation is needed to determine the underlying cause.  The patient's hypertension may be contributing to the symptoms.  The chest X-ray needs to be reviewed for abnormalities.", "plan": "Medications: Omeprazole 20mg once daily. Labs: H. pylori test, CBC. Follow-up in 2 weeks. Monitor blood pressure closely. Consider further cardiac evaluation if symptoms persist or worsen. The chest X-ray needs to be reviewed by a radiologist."}, "medication_review": {"alignment_score": 85, "rationale": "Omeprazole is a proton pump inhibitor (PPI) used to reduce stomach acid. While the patient's symptoms could be related to gastroesophageal reflux disease (GERD), there is no specific indication for omeprazole in the provided information. The chest discomfort and shortness of breath could be related to cardiac or pulmonary issues, and the omeprazole may not address the underlying cause. The plan includes an H. pylori test, which is relevant to GERD, but the omeprazole is not directly related to the H. pylori test."}, "test_validation": {"h_pylori_test": {"relevance_score": 70, "rationale": "The patient's symptoms could be related to GERD, which is often caused by H. pylori infection. The H. pylori test is a reasonable investigation to rule out this possibility."}, "cbc": {"relevance_score": 60, "rationale": "A CBC can provide information about the patient's overall health and can help rule out anemia or infection, which could contribute to fatigue. However, it is not a specific test for the patient's current symptoms."}}, "lifestyle_recommendations": {"food": "Focus on a balanced diet rich in fruits, vegetables, and whole grains. Limit processed foods, sugary drinks, and excessive salt intake. Consider a low-fat diet if GERD is suspected.", "exercise": "Engage in regular moderate-intensity exercise, such as walking or swimming, for at least 30 minutes most days of the week. Avoid strenuous activities that exacerbate symptoms.", "clothing": "Wear loose-fitting, breathable clothing, especially during warm weather. Avoid tight clothing that could constrict the chest.", "music": "Listen to calming music to reduce stress and anxiety. Avoid loud or jarring music that could worsen symptoms.", "fragrance": "Use mild, unscented fragrances. Avoid strong perfumes or colognes that could trigger respiratory irritation."}, "additional_notes": "The patient's ethnicity (South Asian) may influence dietary recommendations. Consult with a registered dietitian for personalized advice.", "safety_notice": "The patient's blood pressure is elevated. Monitor blood pressure closely. Consider further cardiac evaluation if symptoms persist or worsen. The chest X-ray needs to be reviewed by a radiologist."};
+            const iframe = document.getElementById("jsoncrackEmbed");
+            
+            const sendData = () => {
+                console.log("Sending data to JSON Crack...");
+                iframe.contentWindow.postMessage({
+                    json: JSON.stringify(jsonData),
+                    options: {
+                        theme: "light",
+                        direction: "RIGHT"
+                    }
+                }, "*");
+            };
+
+            // Retry mechanism
+            let attempts = 0;
+            const maxAttempts = 10;
+            
+            const attemptSend = () => {
+                if (attempts < maxAttempts) {
+                    sendData();
+                    attempts++;
+                    setTimeout(attemptSend, 1000); // Retry every 1s
+                }
+            };
+
+            iframe.onload = () => {
+                console.log("Iframe loaded, starting send attempts...");
+                attemptSend();
+            };
+            
+        </script>
+    </body>
+    </html>
+    

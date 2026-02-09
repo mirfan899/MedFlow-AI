@@ -1,0 +1,6 @@
+transformers
+torch
+pillow
+reportlab
+huggingface_hub
+accelerate

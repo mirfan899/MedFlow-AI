@@ -1,10 +1,20 @@
 # MedFlow AI – Intelligent SOAP Note Generation & Clinical Documentation
 
+![MedFlow AI Cover](assets/medflowai_cover_photo.png)
+
 ## Problem Statement
 Clinical documentation is one of the biggest sources of burnout for healthcare professionals. Doctors spend a significant portion of their time manually writing SOAP notes, which reduces patient interaction, increases fatigue, and introduces inconsistencies in medical records.
 
 ## Solution
 **MedFlow AI** is an AI-powered system that automatically generates structured, accurate, and readable **SOAP notes** from clinical input. It transforms raw patient data into professionally formatted medical documentation and exports it as a **clean, visually appealing PDF**, ready for sharing or record-keeping.
+
+## Architecture & Flow
+
+The system orchestrates specialized agents to process patient data securely and generate actionable insights.
+
+![Flow Diagram](assets/flow_gragram.png)
+
+![Mermaid Diagram](assets/mermaid_medflow.png)
 
 ## Key Features
 - **Automated SOAP Note Generation**  
@@ -24,6 +34,13 @@ Clinical documentation is one of the biggest sources of burnout for healthcare p
 2. AI processes and structures the data into a SOAP note format.  
 3. The system generates a **beautifully formatted PDF** with clear headings, spacing, and typography.  
 4. The PDF can be saved, shared, or integrated into existing medical systems.
+
+## Demo Video
+
+<video width="640" height="480" controls>
+  <source src="assets/medflowai_youtube.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ## Tech Stack
 - **AI / NLP** for medical text structuring  
