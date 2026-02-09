@@ -30,15 +30,16 @@ The system orchestrates specialized agents to process patient data securely and 
   Reduces documentation time, allowing doctors to focus more on patient care.
 
 ## How It Works
-1. Clinical input is provided by the healthcare professional.  
-2. AI processes and structures the data into a SOAP note format.  
-3. The system generates a **beautifully formatted PDF** with clear headings, spacing, and typography.  
-4. The PDF can be saved, shared, or integrated into existing medical systems.
+1. **Clinical Input**: The healthcare professional provides patient details (symptoms, vitals, history).
+2. **Step 1: AI Analysis (SOA)**: Agent 1 processes the input and generates the **Subjective, Objective, and Assessment** sections of the SOAP note.
+3. **Step 2: Doctor's Plan**: The doctor reviews the AI-generated note and manually adds the **Plan** (prescriptions, labs, follow-up).
+4. **Step 3: Comprehensive Review**: Agent 2 analyzes the complete SOAP note (including the doctor's plan), validates alignment, and generates safety checks and lifestyle recommendations.
+5. **Final Output**: The system outputs a structured **JSON** which can be **visualized as an interactive graph** or exported as a professional **PDF**.
 
-## Demo Video
+## Introduction Video
 
 <video width="640" height="480" controls>
-  <source src="assets/medflowai_youtube.mp4" type="video/mp4">
+  <source src="https://youtu.be/PvZ0KlalKNo" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
