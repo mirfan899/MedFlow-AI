@@ -1,0 +1,73 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MedFlow AI - JSON Visualization</title>
+        <style>
+            body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: sans-serif; }
+            iframe { width: 100%; height: 100%; border: none; }
+            #controls {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: white;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                z-index: 100;
+            }
+            button {
+                padding: 8px 16px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            button:hover { background-color: #0056b3; }
+        </style>
+    </head>
+    <body>
+        <div id="controls">
+            <button onclick="sendData()">Reload Graph Data</button>
+        </div>
+        <iframe id="jsoncrackEmbed" src="https://jsoncrack.com/widget"></iframe>
+        <script>
+            const jsonData = {"soap_note": {"subjective": {"symptoms": ["Chest discomfort", "Shortness of breath during exertion", "Fatigue"], "duration": "2 weeks", "severity": "Moderate", "age": 45, "gender": "Male", "medical_history": ["Hypertension"], "ethnicity": "South Asian"}, "objective": {"vitals": {"blood_pressure": "145/90", "heart_rate": "92 bpm"}, "imaging_findings": "Chest X-ray shows no acute abnormalities. The heart size is within normal limits. The lungs are clear. No pneumothorax or pleural effusion is identified.", "medications": []}, "assessment": "45-year-old South Asian male presents with chest discomfort, shortness of breath during exertion, and fatigue for 2 weeks. He has a history of hypertension. Vitals show elevated blood pressure and heart rate. Chest X-ray is unremarkable. The symptoms could be related to hypertension or other cardiac issues. Further investigation may be warranted to determine the cause of the symptoms.", "plan": {"medications": ["Omeprazole 20mg once daily"], "lab_tests": ["H. pylori test", "CBC"], "follow_up": "2 weeks"}}, "medication_review": {"alignment_score": 85, "rationale": "Omeprazole is indicated for potential GERD symptoms, which could be contributing to chest discomfort. The H. pylori test is relevant to rule out a possible cause of chest pain. The CBC is a general test that can help rule out anemia or other blood disorders that could cause fatigue."}, "test_validation": {"H. pylori test": {"relevance_score": 90, "rationale": "H. pylori infection is a known cause of peptic ulcer disease, which can present with chest pain. Ruling out this possibility is important."}, "CBC": {"relevance_score": 75, "rationale": "A CBC can help identify anemia, infection, or other blood disorders that could contribute to fatigue and potentially chest discomfort."}}, "lifestyle_recommendations": {"food": "Reduce intake of processed foods, saturated fats, and sodium. Increase intake of fruits, vegetables, and whole grains. Consider a low-acid diet if GERD is suspected.", "exercise": "Engage in regular moderate-intensity exercise, such as brisk walking, for at least 30 minutes most days of the week. Avoid strenuous activities that exacerbate symptoms.", "clothing": "Wear loose-fitting, breathable clothing.", "music": "Listen to calming music to reduce stress and anxiety.", "fragrance": "Avoid strong fragrances that may trigger respiratory symptoms."}, "additional_notes": "Consider the patient's cultural background and dietary preferences when providing lifestyle recommendations. Further investigation into the cause of the symptoms is warranted, especially given the patient's age and history of hypertension.", "Percentages": {"medication_review": 85, "test_validation": {"H. pylori test": 90, "CBC": 75}}, "missing_information": {"allergies": [], "social_history": [], "family_history": []}, "flags": ["Symptoms could be related to hypertension or other cardiac issues.", "Further investigation may be warranted to determine the cause of the symptoms."], "previous_prescriptions": [], "imaging_findings": "", "lab_results": []};
+            const iframe = document.getElementById("jsoncrackEmbed");
+            
+            const sendData = () => {
+                console.log("Sending data to JSON Crack...");
+                iframe.contentWindow.postMessage({
+                    json: JSON.stringify(jsonData),
+                    options: {
+                        theme: "light",
+                        direction: "RIGHT"
+                    }
+                }, "*");
+            };
+
+            // Retry mechanism
+            let attempts = 0;
+            const maxAttempts = 10;
+            
+            const attemptSend = () => {
+                if (attempts < maxAttempts) {
+                    sendData();
+                    attempts++;
+                    setTimeout(attemptSend, 1000); // Retry every 1s
+                }
+            };
+
+            iframe.onload = () => {
+                console.log("Iframe loaded, starting send attempts...");
+                attemptSend();
+            };
+            
+        </script>
+    </body>
+    </html>
+    
