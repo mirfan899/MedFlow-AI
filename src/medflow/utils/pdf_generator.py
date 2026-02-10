@@ -4,9 +4,11 @@ from reportlab.lib.units import inch
 from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_JUSTIFY
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak
 from reportlab.lib import colors
+import json
 from datetime import datetime
 
-def generate_soap_pdf(soap_data: dict, agent2_output: dict, filename: str = './medical_soap_note.pdf'):
+def generate_soap_pdf(soap_data: dict, agent2_output: dict, filename: str = './medical_soap_note.pdf', 
+                      patient_name: str = "N/A", patient_id: str = "N/A", provider_name: str = "MedFlow AI Provider"):
     """
     Generates a PDF SOAP note.
     
@@ -14,6 +16,9 @@ def generate_soap_pdf(soap_data: dict, agent2_output: dict, filename: str = './m
         soap_data: The dictionary containing the SOAP note (S, O, A, P).
         agent2_output: The full output from Agent 2, containing recommendations and safety notices.
         filename: Output filename for the PDF.
+        patient_name: Name of the patient.
+        patient_id: ID of the patient.
+        provider_name: Name of the healthcare provider.
     """
     
     doc = SimpleDocTemplate(filename, pagesize=letter,
@@ -95,8 +100,9 @@ def generate_soap_pdf(soap_data: dict, agent2_output: dict, filename: str = './m
     # Patient Information Header
     patient_info_data = [
         ['Date:', datetime.now().strftime('%B %d, %Y')],
-        ['Patient ID:', '[Patient ID]'],
-        ['Provider:', '[Provider Name]']
+        ['Patient Name:', patient_name],
+        ['Patient ID:', patient_id],
+        ['Provider:', provider_name]
     ]
 
     patient_table = Table(patient_info_data, colWidths=[1.5*inch, 4*inch])
@@ -114,10 +120,6 @@ def generate_soap_pdf(soap_data: dict, agent2_output: dict, filename: str = './m
     # ============= SUBJECTIVE =============
     elements.append(Paragraph("S — SUBJECTIVE", header_style))
     elements.append(Spacer(1, 0.1*inch))
-    
-    # We expect soap_data to have 'subjective', 'objective', 'assessment', 'plan' keys
-    # Agent 2 output structure: {'soap_note': {'subjective': ...}, ...}
-    # But here we pass soap_data which IS the 'soap_note' part of Agent 2 output
     
     subjective = soap_data.get('subjective', {})
     
